@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Contact - SHUTTER</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #fff;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                "Segoe UI", sans-serif;
+        }
+
+        .header-right {
+            width: 15%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            position: fixed;
+            top: 0;
+            right: 0;
+            padding: 30px;
+            gap: 36px;
+            z-index: 10;
+        }
+
+        .logo a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 16px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 12px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links .active,
+        .copy-right .active {
+            color: #fc4b4b;
+        }
+
+        .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 16px;
+            font-size: 12px;
+        }
+
+        .social-links a {
+            color: #fff;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #fc4b4b;
+        }
+
+        .contact-section {
+            width: 100%;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .contact-container {
+            width: 100%;
+            max-width: 655px;
+        }
+
+        .contact-container h1 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .contact-description {
+            color: #999;
+            font-size: 15px;
+            line-height: 1.85;
+            margin-bottom: 48px;
+        }
+
+        .contact-description a {
+            color: #fc4b4b;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        /* FORM */
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .name-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            font-weight: 400;
+            color: #fff;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #888;
+            border-radius: 0;
+            outline: none;
+            padding: 10px 0;
+            color: #fff;
+            font: inherit;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input {
+            height: 32px;
+        }
+
+        .form-group textarea {
+            min-height: 175px;
+            resize: vertical;
+            line-height: 1.7;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #fc4b4b;
+        }
+
+        .form-group textarea::placeholder {
+            color: #303030;
+        }
+
+        /* BUTTON */
+
+        .send-btn {
+            align-self: flex-start;
+            margin-top: 25px;
+            padding: 18px 31px;
+            border: none;
+            border-radius: 50px;
+            background: #f36b58;
+            color: #000;
+            font-size: 11px;
+            letter-spacing: 0.8px;
+            cursor: pointer;
+            transition:
+                background 0.3s ease,
+                transform 0.3s ease;
+        }
+
+        .send-btn:hover {
+            background: #fc4b4b;
+            transform: translateY(-3px);
+        }
+
+        .send-btn:focus-visible {
+            outline: 2px solid #fff;
+            outline-offset: 4px;
+        }
+
+        .form-status {
+            color: #fc4b4b;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* ANIMATIONS */
+
+        .fade-down {
+            opacity: 0;
+            transform: translateY(-25px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .fade-right {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .fade-down.show,
+        .fade-right.show {
+            opacity: 1;
+            transform: translate(0);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header-right fade-right">
+
+        <div class="logo">
+            <a href="index.html">SHUTTER</a>
+        </div>
+
+        <nav class="nav-links">
+            <a href="index.html" class="active">HOME</a>
+            <a href="#">PHOTOS</a>
+            <a href="#">BIO</a>
+            <a href="#">BLOG</a>
+            <a href="contact.html">CONTACT</a>
+        </nav>
+
+        <div class="social-links">
+            <a href="#" aria-label="Facebook">
+                <i class="fa-brands fa-facebook-f"></i>
+            </a>
+            <a href="#" aria-label="Twitter">
+                <i class="fa-brands fa-twitter"></i>
+            </a>
+            <a href="#" aria-label="Instagram">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+                <i class="fa-brands fa-linkedin-in"></i>
+            </a>
+            <a href="#" aria-label="Snapchat">
+                <i class="fa-brands fa-snapchat"></i>
+            </a>
+        </div>
+
+    </header>
+
+    <main class="contact-section">
+        <div class="contact-container">
+
+            <h1 class="fade-down">Contact Me</h1>
+
+            <p class="contact-description fade-down">
+                Lorem ipsum dolor sit amet, consectetur
+                <a href="#">adipisicing</a> elit. Ipsa explicabo quasi cum,
+                laudantium neque at veniam itaque atque
+                <a href="#">necessitatibus</a> temporibus!
+                Beatae sit soluta magni neque autem, suscipit dolorem,
+                quo alias.
+            </p>
+
+            <form class="contact-form" id="contactForm">
+
+                <div class="name-row fade-right">
+
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" autocomplete="given-name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" autocomplete="family-name" required>
+                    </div>
+
+                </div>
+
+                <div class="form-group fade-right">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" autocomplete="email" required>
+                </div>
+
+                <div class="form-group fade-right">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+
+                <div class="form-group fade-right">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" placeholder="Write your notes or questions here..."
+                        required></textarea>
+                </div>
+
+                <button type="submit" class="send-btn fade-down">
+                    SEND MESSAGE
+                </button>
+
+                <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+
+            </form>
+
+        </div>
+    </main>
+
+    <script>
+        // Scroll animations
+
+        const animatedElements = document.querySelectorAll(
+            ".fade-down, .fade-right"
+        );
+
+        if ("IntersectionObserver" in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("show");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            animatedElements.forEach((element) => {
+                observer.observe(element);
+            });
+        } else {
+            animatedElements.forEach((element) => {
+                element.classList.add("show");
+            });
+        }
+
+    </script>
+
+</body>
+</html>

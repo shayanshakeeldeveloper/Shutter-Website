@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Shutter - Photography Portfolio</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                'Segoe UI', sans-serif;
+            color: #fff;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .header-right {
+            width: 15%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            position: fixed;
+            top: 0;
+            right: 0;
+            padding: 30px;
+            gap: 36px;
+            z-index: 10;
+        }
+
+        .logo a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 16px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 12px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links .active,
+        .copy-right .active {
+            color: #fc4b4b;
+        }
+
+        .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 16px;
+            font-size: 12px;
+        }
+
+        .social-links a {
+            color: #fff;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #fc4b4b;
+        }
+
+        /* =========================
+           GALLERY LAYOUT
+        ========================= */
+
+        .main {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 85%;
+        }
+
+        .main>div {
+            display: flex;
+            gap: 20px;
+            height: 400px;
+        }
+
+        .row1 .img4,
+        .row6 .img4 {
+            width: 70%;
+        }
+
+        .row1 .img5,
+        .row6 .img5 {
+            width: 30%;
+        }
+
+        .row2 .img1,
+        .row2 .img3,
+        .row5 .img1,
+        .row5 .img3 {
+            width: 25%;
+        }
+
+        .row2 .img2,
+        .row5 .img2 {
+            width: 50%;
+        }
+
+        .row3 .img6,
+        .row3 .img7,
+        .row7 .img6,
+        .row7 .img7 {
+            width: 50%;
+        }
+
+        .row4 .img8,
+        .row4 .img9,
+        .row4 .img10 {
+            width: 33.333%;
+        }
+
+        .row8 .img8,
+        .row8 .img9 {
+            width: 50%;
+        }
+
+        /* =========================
+           IMAGE CARD
+        ========================= */
+
+        .image-card {
+            position: relative;
+            display: block;
+            height: 100%;
+            overflow: hidden;
+            cursor: pointer;
+            isolation: isolate;
+            background: #151515;
+        }
+
+        .image-card img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.3, 1);
+        }
+
+        /* DARK OVERLAY USING BEFORE */
+
+        .image-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top,
+                    rgba(0, 0, 0, 0.88),
+                    rgba(0, 0, 0, 0.35) 45%,
+                    rgba(0, 0, 0, 0.05));
+            opacity: 0;
+            transition: opacity 0.45s ease;
+            z-index: 1;
+        }
+
+        /* TEXT USING AFTER */
+
+        .image-card::after {
+            content: attr(data-title) "\A VIEW PHOTO  ↗";
+            white-space: pre-line;
+            position: absolute;
+            left: 25px;
+            right: 15px;
+            bottom: 25px;
+            color: #fff;
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 2.2;
+            letter-spacing: 0.5px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition:
+                opacity 0.4s ease,
+                transform 0.4s ease;
+            z-index: 2;
+        }
+
+        /* HOVER EFFECTS */
+
+        .image-card:hover::before {
+            opacity: 1;
+        }
+
+        .image-card:hover::after {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .image-card:hover img {
+            transform: scale(1.08);
+        }
+
+        /* KEYBOARD ACCESSIBILITY */
+
+        .image-card:focus-visible {
+            outline: 2px solid #fc4b4b;
+            outline-offset: -3px;
+        }
+
+        .image-card:focus-visible::before,
+        .image-card:focus-visible::after {
+            opacity: 1;
+        }
+
+        .image-card:focus-visible::after {
+            transform: translateY(0);
+        }
+
+        /* =========================
+           FADE ANIMATIONS
+        ========================= */
+
+        .fade-down {
+            opacity: 0;
+            transform: translateY(-40px);
+            transition:
+                opacity 0.8s ease,
+                transform 0.8s ease;
+        }
+
+        .fade-down.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-right {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition:
+                opacity 0.8s ease,
+                transform 0.8s ease;
+        }
+
+        .fade-right.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* =========================
+           COPYRIGHT
+        ========================= */
+
+        .copy-right {
+            width: 85%;
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            text-align: center;
+            color: #999;
+            font-size: 13px;
+        }
+
+        .copy-right a {
+            color: #fc4b4b;
+            text-decoration: none;
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <header class="header-right fade-right">
+
+        <div class="logo">
+            <a href="index.html">SHUTTER</a>
+        </div>
+
+        <nav class="nav-links">
+            <a href="index.html" class="active">HOME</a>
+            <a href="#">PHOTOS</a>
+            <a href="#">BIO</a>
+            <a href="#">BLOG</a>
+            <a href="contact.html">CONTACT</a>
+        </nav>
+
+        <div class="social-links">
+            <a href="#" aria-label="Facebook">
+                <i class="fa-brands fa-facebook-f"></i>
+            </a>
+            <a href="#" aria-label="Twitter">
+                <i class="fa-brands fa-twitter"></i>
+            </a>
+            <a href="#" aria-label="Instagram">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+                <i class="fa-brands fa-linkedin-in"></i>
+            </a>
+            <a href="#" aria-label="Snapchat">
+                <i class="fa-brands fa-snapchat"></i>
+            </a>
+        </div>
+
+    </header>
+
+    <!-- PHOTO GALLERY -->
+
+    <main class="main">
+
+        <div class="row1">
+
+            <div class="image-card img4 fade-down" data-title="Nature Photography" tabindex="0">
+                <img src="https://preview.colorlib.com/theme/shutter/images/img_4.avif" alt="Nature photography">
+            </div>
+
+            <div class="image-card img5 fade-down" data-title="Portrait Photography" tabindex="0">
+                <img src="https://preview.colorlib.com/theme/shutter/images/img_5.avif" alt="Portrait photography">
+            </div>
+
+        </div>
+
+        <div class="row2">
+
+            <div class="image-card img1 fade-down" data-title="Travel Stories" tabindex="0">
+                <img src="https://preview.colorlib.com/theme/shutter/images/img_1.avif" alt="Travel photography">
+            </div>
+
+            <div class="image-card img2 fade-down" data-title="Creative Moments" tabindex="0">
+                <img src="https://preview.colorlib.com/theme/shutter/images/img_2.avif" alt="Creative photography">
+            </div>
+
+            <div class="image-card img3 fade-down" data-title="Urban Life" tabindex="0">
+                <img src="https://preview.colorlib.com/theme/shutter/images/img_3.avif" alt="Urban photography">
+            </div>
+
+        </div>
+
+        <div class="row3">
+            <div class="image-card img6 fade-down" data-title="Wildlife" tabindex="0">
+                <img src="https://preview.colorlib.com/theme/shutter/images/img_6.avif" alt="Wildlife photography">
+            </div>
+            <div class="image-card img7 fade-down" data-title="Beautiful Places" tabindex="0">
+                <img src="https://preview.colorlib.com/theme/shutter/images/img_7.avif" alt="Landscape photography">
+            </div>
+        </div>
+        <div class="row4">
+            <div class="image-card img8 fade-down" data-title="Architecture" tabindex="0">
+                <img src="https://preview.colorlib.com/theme/shutter/images/img_8.avif" alt="Architecture photography">
+            </div>
+            <div class="image-card img9 fade-down" data-title="Daily Life" tabindex="0">
+                <img src="https://preview.colorlib.com/theme/shutter/images/img_9.avif" alt="Daily life photography">
+            </div>
+            <div class="image-card img10 fade-down" data-title="Fine Art" tabindex="0">
+                <img src="https://preview.colorlib.com/theme/shutter/images/img_10.avif" alt="Fine art photography">
+            </div>
+        </div>
+        <div class="row5">
+            <div class="image-card img1 fade-down" data-title="Travel Stories" tabindex="0">
+                <img src="https://preview.colorlib.com/theme/shutter/images/img_1.avif" alt="Travel photography">
+            </div>
+            <div class="image-card img2 fade-down" data-title="Creative Moments" tabindex="0">
+                <img src="https://preview.colorlib.com/theme/shutter/images/img_2.avif" alt="Creative photography">
+            </div>
+            <div class="image-card img3 fade-down" data-title="Urban Life" tabindex="0">
+                <img src="https://preview.colorlib.com/theme/shutter/images/img_3.avif" alt="Urban photography">
+            </div>
+        </div>
+        <div class="row6">
+            <div class="image-card img4 fade-down" data-title="Nature Photography" tabindex="0">
+                <img src="https://preview.colorlib.com/theme/shutter/images/img_4.avif" alt="Nature photography">
+            </div>
+            <div class="image-card img5 fade-down" data-title="Portrait Photography" tabindex="0">
+                <img src="https://preview.colorlib.com/theme/shutter/images/img_5.avif" alt="Portrait photography">
+            </div>
+        </div>
+        <div class="row7">
+            <div class="image-card img7 fade-down" data-title="Beautiful Places" tabindex="0">
+                <img src="https://preview.colorlib.com/theme/shutter/images/img_7.avif" alt="Landscape photography">
+            </div>
+            <div class="image-card img6 fade-down" data-title="Wildlife" tabindex="0">
+                <img src="https://preview.colorlib.com/theme/shutter/images/img_6.avif" alt="Wildlife photography">
+            </div>
+        </div>
+        <div class="row8">
+            <div class="image-card img8 fade-down" data-title="Architecture" tabindex="0">
+                <img src="https://preview.colorlib.com/theme/shutter/images/img_8.avif" alt="Architecture photography">
+            </div>
+            <div class="image-card img9 fade-down" data-title="Daily Life" tabindex="0">
+                <img src="https://preview.colorlib.com/theme/shutter/images/img_9.avif" alt="Daily life photography">
+            </div>
+        </div>
+    </main>
+
+    <footer class="copy-right">
+        <span>
+            Copyright © 2026 All rights reserved |
+            This template is made with by
+            <a href="https://colorlib.com" class="active">Colorlib</a>
+        </span>
+    </footer>
+    <script>
+        const animatedElements = document.querySelectorAll(
+            ".fade-down, .fade-right"
+        );
+
+        if ("IntersectionObserver" in window) {
+            const observer = new IntersectionObserver(
+                (entries, observer) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("show");
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                },
+                {
+                    threshold: 0.1
+                }
+            );
+
+            animatedElements.forEach((element) => {
+                observer.observe(element);
+            });
+        } else {
+            animatedElements.forEach((element) => {
+                element.classList.add("show");
+            });
+        }
+    </script>
+
+</body>
+
+</html>
